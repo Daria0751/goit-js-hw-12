@@ -10,8 +10,6 @@ let currentQuery = '';
 let currentPage = 1;
 const perPage = 15;
 
-@param { Event } event
-
 async function onSearchSubmit(event) {
     event.preventDefault();
     clearGallery();
