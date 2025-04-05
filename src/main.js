@@ -10,13 +10,27 @@ let currentQuery = '';
 let currentPage = 1;
 const perPage = 15;
 
+document.addEventListener('DOMContentLoaded', () => {
+    if (searchForm) {
+        searchForm.addEventListener('submit', onSearchSubmit);
+    } else {
+        console.error('.search-form не знайдений');
+    }
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', onLoadMoreClick);
+    } else {
+        console.error('.load-more не знайдений');
+    }
+});
+
 async function onSearchSubmit(event) {
     event.preventDefault();
     clearGallery();
     hideLoadMoreButton();
 
-    currentQuery = event.currentTarget.elements.searchQuery.value.trim();
-    if (!currentQuery) {
+    const searchQuery = event.currentTarget.elements.searchQuery;
+    if (!searchQuery || !searchQuery.value.trim()) {
         iziToast.warning({
             title: 'Увага',
             message: 'Будь ласка, введіть пошуковий запит.',
@@ -25,6 +39,7 @@ async function onSearchSubmit(event) {
         return;
     }
 
+    currentQuery = searchQuery.value.trim();
     currentPage = 1;
     await fetchImages();
 }
@@ -39,7 +54,7 @@ async function fetchImages() {
 
     try {
         const data = await getImagesByQuery(currentQuery, currentPage);
-        if (data.hits.length === 0) {
+        if (!data || !data.hits || data.hits.length === 0) {
             iziToast.info({
                 title: 'Інформація',
                 message: 'На жаль, за вашим запитом нічого не знайдено.',
@@ -62,12 +77,16 @@ async function fetchImages() {
             showLoadMoreButton();
         }
 
-        const { height: cardHeight } = document.querySelector('.gallery-item').getBoundingClientRect();
-        window.scrollBy({
-            top: cardHeight * 2,
-            behavior: 'smooth',
-        });
+        const galleryItem = document.querySelector('.gallery-item');
+        if (galleryItem) {
+            const { height: cardHeight } = galleryItem.getBoundingClientRect();
+            window.scrollBy({
+                top: cardHeight * 2,
+                behavior: 'smooth',
+            });
+        }
     } catch (error) {
+        console.error('Помилка під час отримання даних: ', error);
         iziToast.error({
             title: 'Помилка',
             message: 'Сталася помилка при завантаженні зображень. Спробуйте ще раз.',
@@ -77,6 +96,3 @@ async function fetchImages() {
         hideLoader();
     }
 }
-
-searchForm.addEventListener('submit', onSearchSubmit);
-loadMoreBtn.addEventListener('click', onLoadMoreClick);
