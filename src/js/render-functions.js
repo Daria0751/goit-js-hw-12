@@ -10,8 +10,6 @@ const lightbox = new SimpleLightbox('.gallery a', {
     captionDelay: 250,
 });
 
-@param {Array} images
-
 export function createGallery(images) {
     const markup = images.map(({ webformatURL, largeImageURL, tags }) => `
         <a href="${largeImageURL}" class="gallery-item">
