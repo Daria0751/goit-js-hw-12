@@ -13,10 +13,10 @@
       href="https://cdn.jsdelivr.net/npm/simplelightbox/dist/simple-lightbox.min.css"
     />
     <link rel="stylesheet" href="./css/styles.css" />
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="./main.js" defer></script>
   </head>
   <body>
-    <form class="form">
+    <form class="search-form">
       <input
         type="text"
         name="searchQuery"
@@ -28,7 +28,7 @@
 
     <ul class="gallery" id="gallery"></ul>
 
-    <button id="load-more-btn">Load more</button>
+    <button class="load-more">Load more</button>
 
     <div class="loader" id="loader">
       <span class="loader">Завантаження...</span>

@@ -3,14 +3,12 @@ import { createGallery, clearGallery, showLoader, hideLoader, showLoadMoreButton
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const searchForm = document.querySelector('.search-form');
-const loadMoreBtn = document.querySelector('.load-more');
-
-let currentQuery = '';
-let currentPage = 1;
-const perPage = 15;
+let searchForm, loadMoreBtn;
 
 document.addEventListener('DOMContentLoaded', () => {
+    searchForm = document.querySelector('.search-form');
+    loadMoreBtn = document.querySelector('.load-more');
+
     if (searchForm) {
         searchForm.addEventListener('submit', onSearchSubmit);
     } else {
@@ -23,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('.load-more не знайдений');
     }
 });
+
+let currentQuery = '';
+let currentPage = 1;
+const perPage = 15;
 
 async function onSearchSubmit(event) {
     event.preventDefault();
