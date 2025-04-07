@@ -6,13 +6,13 @@ import 'izitoast/dist/css/iziToast.min.css';
 let searchForm, loadMoreBtn;
 
 document.addEventListener('DOMContentLoaded', () => {
-    searchForm = document.querySelector('.search-form');
+    searchForm = document.querySelector('.form');
     loadMoreBtn = document.querySelector('.load-more');
 
     if (searchForm) {
         searchForm.addEventListener('submit', onSearchSubmit);
     } else {
-        console.error('.search-form не знайдений');
+        console.error('.form не знайдений');
     }
 
     if (loadMoreBtn) {
